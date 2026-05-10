@@ -1,23 +1,41 @@
-import logo from './logo.svg';
-import './App.css';
+import { Routes, Route, Navigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+
+import Header from "./components/Header";
+import Footer from "./components/Footer";
+
+import AboutMe from "./pages/AboutMe";
+import MyCity from "./pages/MyCity";
+import MyFuture from "./pages/MyFuture";
 
 function App() {
+  const [theme, setTheme] = useState(() => {
+    return localStorage.getItem("theme") || "light";
+  });
+
+  useEffect(() => {
+    localStorage.setItem("theme", theme);
+    document.body.className = theme;
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme(theme === "light" ? "dark" : "light");
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="app">
+      <Header theme={theme} toggleTheme={toggleTheme} />
+
+      <main className="main">
+        <Routes>
+          <Route path="/" element={<Navigate to="/about" />} />
+          <Route path="/about" element={<AboutMe />} />
+          <Route path="/my-city" element={<MyCity />} />
+          <Route path="/my-future" element={<MyFuture />} />
+        </Routes>
+      </main>
+
+      <Footer />
     </div>
   );
 }
