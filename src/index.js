@@ -7,7 +7,7 @@ import "./style.css";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(
-  <BrowserRouter>
+  <BrowserRouter basename="/my-portfolio-spa">
     <App />
   </BrowserRouter>
 );
